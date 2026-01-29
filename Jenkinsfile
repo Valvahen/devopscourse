@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/myorg/addressbook.git'
+                git branch: 'main', url: 'https://github.com/Valvahen/devopscourse.git'
             }
         }
         stage('Build') {
