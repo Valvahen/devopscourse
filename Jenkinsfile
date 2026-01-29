@@ -1,11 +1,25 @@
 pipeline {
     agent any
     stages {
-        stage('Submit Stack') {
+        stage('Checkout') {
             steps {
-              sh "cat 01_s3cft.yml"
-              sh "aws cloudformation create-stack --stack-name s3bucket --template-body file://01_s3cft.yml --region 'us-east-1'"
-              }
-             }
+                git branch: 'main', url: 'https://github.com/myorg/addressbook.git'
             }
+        }
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
             }
+        }
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        stage('Publish & Deploy') {
+            steps {
+                sh 'mvn deploy'
+            }
+        }
+    }
+}
